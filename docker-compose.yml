@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  db:
+    image: postgres:13
+    container_name: odoo17-db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+  odoo:
+    image: odoo:17
+    container_name: odoo17
+    depends_on:
+      - db
+    ports:
+      - "8080:8069"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - DB_HOST=db
+      - DB_USER=odoo
+      - DB_PASSWORD=odoo
+      - ADDONS_PATH=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
+    volumes:
+      - ./docker-addons:/mnt/extra-addons
+      - odoo-web-data:/var/lib/odoo
+    command: ["odoo", "--dev=reload"]
+volumes:
+  odoo-db-data:
+  odoo-web-data:  

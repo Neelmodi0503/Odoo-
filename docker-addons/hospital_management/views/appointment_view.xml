@@ -1,0 +1,77 @@
+<?xml  version ="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id ="view_hospital_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment List">
+                <field name="reference"/>
+                <field name="date_of_appointment"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id ="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment Form">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible = "state != 'draft'" />
+                    <button name="action_ongoing" type="object" string="Ongoing" class="btn btn-info" invisible  = "state != 'confirm'" />
+                    <button name="action_done" type="object" string="Done" class = "btn btn-success" invisible  = "state != 'ongoing'" />
+                    <button name="action_cancel" type="object" string="Cancel" class = 'btn btn-warning	' invisible  = "state == 'done'" />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,ongoing,done" options="{'clickable': '1'}" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="reference"/>
+                        <field name="patient_id"/>
+                        <field name="date_of_appointment"/>
+                    </group>
+                    <group>
+                        <field name="note"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Info">
+                            <field name="appointment_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Details">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id ="action_hospital_appointment" model="ir.actions.act_window">
+        <field name ="name">Appointment</field>
+        <field name ="res_model">hospital.appointment</field>
+        <field name ="view_mode">tree,form</field>
+        <field name = 'help' type='html'>
+            <p class="o_view_nocontent_smiling_face">   
+                Create your first patient
+            </p>
+        </field>
+    </record>
+
+</odoo> 
+            
