@@ -32,18 +32,18 @@ class HospitalPatient(models.Model):
     )
 
     tag_ids = fields.Many2many(
-        "patient.tag", "patient_tag_rel", "hospital_patient_id", "tag_id", string="Tags"
-    )
+            "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
+        )
     def unlink(self):   
-        for rec in self:
-            appointments = self.env["hospital.appointment"].search(
-                [("patient_id", "=", rec.id)]
-            )
-            if appointments:
-                raise ValidationError(  
-                    _("Cannot delete patient with existing appointments.")
+            for rec in self:
+                appointments = self.env["hospital.appointment"].search(
+                    [("patient_id", "=", rec.id)]
                 )
-        return super(HospitalPatient, self).unlink()
+                if appointments:
+                    raise ValidationError(  
+                        _("Cannot delete patient with existing appointments.")
+                    )
+            return super(HospitalPatient, self).unlink()
 
     
      #Functions 
