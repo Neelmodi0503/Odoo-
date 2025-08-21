@@ -30,7 +30,11 @@ class HospitalPatient(models.Model):
         default="male",
         tracking=True,
     )
-    def unlink(self):
+
+    tag_ids = fields.Many2many(
+        "patient.tag", "patient_tag_rel", "hospital_patient_id", "tag_id", string="Tags"
+    )
+    def unlink(self):   
         for rec in self:
             appointments = self.env["hospital.appointment"].search(
                 [("patient_id", "=", rec.id)]
@@ -41,9 +45,7 @@ class HospitalPatient(models.Model):
                 )
         return super(HospitalPatient, self).unlink()
 
-    tag_ids = fields.Many2many(
-        "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
-    )
+    
      #Functions 
 
     
