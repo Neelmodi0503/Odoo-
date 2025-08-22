@@ -18,10 +18,12 @@ class HospitalPatient(models.Model):
     name = fields.Char(string="Patient Name", tracking=True)
     age = fields.Integer(string="Age",compute="compute_age",store=True)
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
-    email = fields.Char(string="Email")
+    email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
     marital_status = fields.Selection(
-        [("single", "Single"), ("married", "Married")], default="single"
+        [("single", "Single"),
+          ("married", "Married")],
+            default="single"
     )
     gender = fields.Selection(
         [("male", "Male"),
@@ -35,6 +37,15 @@ class HospitalPatient(models.Model):
     tag_ids = fields.Many2many(
             "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
         )
+    
+    _sql_constraints = [
+        ('unique_email', 'unique(email)', 'The email must be unique!'),
+        ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
+    ]
+
+                             #Functions 
+
+
     def unlink(self):   
             for rec in self:
                 appointments = self.env["hospital.appointment"].search(
@@ -47,8 +58,6 @@ class HospitalPatient(models.Model):
             return super(HospitalPatient, self).unlink()
 
     
-     #Functions 
-
     
     def action_save_and_new(self):
         return {
@@ -63,36 +72,8 @@ class HospitalPatient(models.Model):
                 default_age=False,  
                 default_gender=False,
             ),
-        }   
-    
-         #decorators
+        }
 
-    @api.constrains("contact_no")
-    def check_contact_no_length(self):
-        for record in self:
-            if record.contact_no:
-                if len(record.contact_no) != 10:
-                    raise ValidationError("Contact number must be exactly 10 digits")
-                if not record.contact_no.isdigit():
-                    raise ValidationError("Contact number must contain digits only.")
-
-    @api.depends("date_of_birth")
-    def compute_age(self):
-        for rec in self:
-            if rec.date_of_birth:
-                today = date.today()
-                rec.age = (
-                    today.year
-                    - rec.date_of_birth.year
-                    - (
-                        (today.month, today.day)
-                        < (rec.date_of_birth.month, rec.date_of_birth.day)
-                    )
-                )
-            else:
-                rec.age = 0
-
-    external_data = fields.Text(string="Enter External Api")
 
     def fetch_external_data(self):
         url = "https://jsonplaceholder.typicode.com/posts" 
@@ -131,6 +112,40 @@ class HospitalPatient(models.Model):
 
         return patient
 
+                    #decorators
+
+    @api.constrains("contact_no")
+    def check_contact_no_length(self):
+        for record in self:
+            if record.contact_no:
+                if len(record.contact_no) != 10:
+                    raise ValidationError("Contact number must be exactly 10 digits")
+                if not record.contact_no.isdigit():
+                    raise ValidationError("Contact number must contain digits only.")
+                if record.email and not record.email.endswith('@gmail.com'):
+                    raise ValidationError("Email must be a Gmail address!")
+
+
+
+    @api.depends("date_of_birth")
+    def compute_age(self):
+        for rec in self:
+            if rec.date_of_birth:
+                today = date.today()
+                rec.age = (
+                    today.year
+                    - rec.date_of_birth.year
+                    - (
+                        (today.month, today.day)
+                        < (rec.date_of_birth.month, rec.date_of_birth.day)
+                    )
+                )
+            else:
+                rec.age = 0
+
+    external_data = fields.Text(string="Enter External Api")
+
+    
  
 
 

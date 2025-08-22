@@ -18,6 +18,7 @@
         'views/crm_lead_wizard.xml',
         'views/crm_lead_confirm_wizard_action.xml',
         'views/crm_lead_inherit_view.xml',
+        'views/doctor_view.xml',
         "views/menu.xml"
     ],
     "application": True,         

@@ -18,6 +18,14 @@
             action ="action_hospital_patient"
             sequence="1"
         />
+      <menuitem 
+            id ="hospital_doctors"
+            name = 'Doctors'
+            parent = 'menu_frontdesk'
+            action = 'action_hospital_doctor'
+            sequence = "2"
+
+      />
 
       <menuitem 
             id = "menu_hospital_appointment"
@@ -33,7 +41,7 @@
             parent = "menu_frontdesk"
             action ="action_hospital_appointment_line"
             sequence="3"
-        />
+        />  
 
       <menuitem 
             id = "menu_patients_readonly"
