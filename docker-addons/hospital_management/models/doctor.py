@@ -1,5 +1,7 @@
-from odoo import models , fields,api
+from odoo import models , fields,api,_
 from  datetime import date
+import logging
+_logger = logging.getLogger(__name__)
 
 class HospitalDoctor(models.Model):
     _name = 'hospital.doctor'
@@ -17,7 +19,7 @@ class HospitalDoctor(models.Model):
         string="Gender",
         default="male",
         tracking=True,
-    )   
+    )       
     @api.depends('date_of_birth')
     def compute_age(self):
         today = date.today()
@@ -26,10 +28,19 @@ class HospitalDoctor(models.Model):
                 rec.age = (
                     today.year
                     - rec.date_of_birth.year
-                    - ((today.month, today.day) < (rec.date_of_birth.month, rec.date_of_birth.day))
+                    - ((today.month, today.day) < (rec  .date_of_birth.month, rec.date_of_birth.day))
                 )
             else:
                 rec.age = 0
+
+    def cron_test_doctor(self):
+        _logger.warning(">>> CRON JOB RUNNING SUCCESSFULLY <<<")
+        doctors = self.search([])
+        for doc in doctors:
+            _logger.info("Doctor Found: %s (Age: %s)", doc.name, doc.age)
+
+    
+ 
 
 
 

@@ -12,7 +12,7 @@ class HospitalPatient(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Hospital Patient"
     _rec_name = "name"
-        
+
      #Fields   
 
     name = fields.Char(string="Patient Name", tracking=True)
@@ -57,7 +57,6 @@ class HospitalPatient(models.Model):
                     )
             return super(HospitalPatient, self).unlink()
 
-    
     
     def action_save_and_new(self):
         return {
@@ -145,8 +144,7 @@ class HospitalPatient(models.Model):
 
     external_data = fields.Text(string="Enter External Api")
 
-    
- 
+
 
 
 
