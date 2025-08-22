@@ -4,7 +4,6 @@ from datetime import date
 import requests
 import logging
 
-    
 _logger = logging.getLogger(__name__)
 
 
@@ -25,7 +24,9 @@ class HospitalPatient(models.Model):
         [("single", "Single"), ("married", "Married")], default="single"
     )
     gender = fields.Selection(
-        [("male", "Male"), ("female", "Female"),("other",'Other')],
+        [("male", "Male"),
+        ("female", "Female"),
+        ("other",'Other')],
         string="Gender",
         default="male",
         tracking=True,
@@ -106,6 +107,29 @@ class HospitalPatient(models.Model):
             _logger.error("Error fetching API data: %s", str(e))
 
 
+    def get_senior_patients(self):
+        senior = self.env['hospital.patient'].search([('age', '>', '25')])
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Senior Patients',
+            'res_model': 'hospital.patient',
+            'view_mode': 'tree,form',
+            'domain': [('id', 'in', senior.ids)],  
+            'target': 'current',
+        }
+    def add_new_patient(self):
+        patient = self.env['hospital.patient'].create({
+            'name': 'Hemil Dave',
+            'email' : 'hemildave04@gmail.com',
+            'contact_no' : "7128867778",
+            'date_of_birth' : '2002-03-04', 
+    
+        })
+
+        _logger.warning("Patient added : %s (ID: %d, Age: %d)", patient.name, patient.id, patient.age)
+
+        return patient
 
  
 
