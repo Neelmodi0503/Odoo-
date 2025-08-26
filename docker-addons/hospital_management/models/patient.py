@@ -31,7 +31,6 @@ class HospitalPatient(models.Model):
         ("other",'Other')],
         string="Gender",
         default="male",
-        tracking=True,
     )
 
     tag_ids = fields.Many2many(

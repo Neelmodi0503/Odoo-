@@ -18,7 +18,6 @@ class HospitalDoctor(models.Model):
         ("other",'Other')],
         string="Gender",
         default="male",
-        tracking=True,
     )       
     @api.depends('date_of_birth')
     def compute_age(self):

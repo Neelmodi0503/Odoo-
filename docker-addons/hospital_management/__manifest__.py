@@ -3,9 +3,7 @@
     "version": "1.0",
     "author": "Neel Modi",
     "depends": ["base", "mail", "product","sale",'crm'],
-    'external_dependencies': {
-        'python': ['requests'],
-    },
+    
     'sequence':"1",
     "data": [
         "security/ir.model.access.csv",
