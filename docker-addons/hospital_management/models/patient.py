@@ -6,7 +6,6 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
     _inherit = ["mail.thread", "mail.activity.mixin"]
@@ -16,7 +15,7 @@ class HospitalPatient(models.Model):
      #Fields   
 
     name = fields.Char(string="Patient Name", tracking=True)
-    age = fields.Integer(string="Age",compute="compute_age",store=True)
+    age = fields.Integer(string="Age",compute="compute_age",store=False)
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
@@ -32,11 +31,22 @@ class HospitalPatient(models.Model):
         string="Gender",
         default="male",
     )
+    # Testing Payment Gateways 
+    price = fields.Float(string= "price")
+    tracking_number = fields.Char(string="tracking_number")
+    status= fields.Char(string="status")
+    shipping_price = fields.Float(string="Shipping Price")
+    shipping_status = fields.Char(string="Shipping Status")
+    payment_status = fields.Selection([
+        ('unpaid', 'Unpaid'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+    ], default='unpaid',
+        readonly=True)
 
     tag_ids = fields.Many2many(
             "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
-        )
-    
+        )   
     _sql_constraints = [
         ('unique_email', 'unique(email)', 'The email must be unique!'),
         ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
@@ -71,6 +81,36 @@ class HospitalPatient(models.Model):
                 default_gender=False,
             ),
         }
+    def action_shipping(self):
+        response = {
+            "price": 150.0,
+            "tracking_number": "DUMMY123456",
+            "status": "shipped"
+        }
+        self.write({
+            "shipping_price": response["price"],
+            "tracking_number": response["tracking_number"],
+            "shipping_status": response["status"]
+        })
+        return True
+    
+    def action_update_tracking(self):
+        """Dummy API call for tracking status update"""
+        response = {
+            "tracking_number": self.tracking_number,
+            "status": "delivered"
+        }
+        self.write({
+            "shipping_status": response["status"]
+        })
+        return True
+    def action_pay_now(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        return {
+            "type": "ir.actions.act_url",
+            "target": "self",
+            "url": f"{base_url}/hospital/payment?patient_id={self.id}"
+    }
 
 
     def fetch_external_data(self):
@@ -123,8 +163,6 @@ class HospitalPatient(models.Model):
                 if record.email and not record.email.endswith('@gmail.com'):
                     raise ValidationError("Email must be a Gmail address!")
 
-
-
     @api.depends("date_of_birth")
     def compute_age(self):
         for rec in self:
@@ -140,8 +178,11 @@ class HospitalPatient(models.Model):
                 )
             else:
                 rec.age = 0
-
     external_data = fields.Text(string="Enter External Api")
+
+
+
+
 
 
 

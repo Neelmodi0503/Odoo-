@@ -8,6 +8,7 @@
             <tree string="Patients">
                 <field name="name"/>
                 <field name="age" readonly="1"/>
+                <field name = "payment_status"/>
                 <field name="date_of_birth" optional="hide"/>
                 <field name="gender" optional="show"/>
 
@@ -56,17 +57,38 @@
                         
                         <group>
                             <field name="date_of_birth" optional="show"/>
-                            <field name="gender"/>
+                            <field name="payment_status"/>
                             <field name ="tag_ids" widget="many2many_tags"/>
                             <field name = "marital_status"/>
                         </group>
+                         <group>
+                         <field name = "shipping_status"/>
+                         <field name = "tracking_number"/>
+                         <field name = "shipping_price"/>  
+                         </group> 
+
                     </group>
+                    
+                     <button name="action_pay_now" type="object"
+                            string="Pay Now" class="btn-primary"
+                            modifiers="{'invisible': [('payment_status','=','paid')]}"/>
+
+                    <button name = "action_shipping" type = "object"
+                            string = "Fetch Price " class="btn-primary"
+                       />
+                       <button name = "action_update_tracking" type = "object"
+                            string = " Track " class="btn-primary" />
+
+
                 </sheet>
                 
                 <div class="oe_chatter">
                     <field name="message_follower_ids" groups="base.group_user" widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
+
+
+              
 
 
             </form>
@@ -88,7 +110,6 @@
     </record>
 
 
-
 <record id="view_form_hospital_patient" model="ir.ui.view">
     <field name="name">hospital.patient.form.api</field>
     <field name="model">hospital.patient</field>
@@ -102,6 +123,25 @@
         </xpath>
     </field>
 </record>
+
+
+               
+
+    <template id="payment_dummy_template" name="Dummy Payment Page">
+        <t t-call="web.layout">
+            <div class="oe_structure container mt-5">
+                <h2>Dummy Payment Page</h2>
+                <p>Hello <t t-esc="patient.name"/>
+ 👋</p>
+                <p>Status: <strong>
+                    <t t-esc="patient.payment_status"/>
+                </strong>
+            </p>
+            <p>✅ Refreshing this page marks your payment as done automatically.</p>
+        </div>
+    </t>
+</template>
+
 
 
 </odoo>

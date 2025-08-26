@@ -9,7 +9,7 @@ class HospitalAppointment(models.Model):
 
 
     reference = fields.Char(string='Reference', readonly=True, copy=False, default='New')
-    patient_id = fields.Many2one('hospital.patient', string='Patient', required=False)
+    patient_id = fields.Many2one('res.partner', string='Patient', required=False)
     date_of_appointment = fields.Date(string="Date of Appointment", required=True)
     note = fields.Text(string='Notes')
     state = fields.Selection([  
@@ -20,7 +20,6 @@ class HospitalAppointment(models.Model):
         ('cancel', 'Cancelled') 
     ], string='Status', default='draft', required=True,tracking=True)
     appointment_line_ids = fields.One2many('hospital.appointment.line','appointment_id', string ='Lines')
-
 
     @api.model_create_multi
     def create(self,vals_list):
@@ -50,7 +49,7 @@ class HospitalAppointmentLine(models.Model):
     _name = 'hospital.appointment.line'
     _description = 'hospital appointment line'
 
-
+    
     appointment_id = fields.Many2one('hospital.appointment',string = 'Appointment Line')
     product_id = fields.Many2one('product.product', string='product')
     qty = fields.Float(string="Quantity")

@@ -2,7 +2,7 @@
     "name": "Hospital Management",
     "version": "1.0",
     "author": "Neel Modi",
-    "depends": ["base", "mail", "product","sale",'crm'],
+    "depends": ["base", "mail", "product","sale",'crm','website'],
     
     'sequence':"1",
     "data": [

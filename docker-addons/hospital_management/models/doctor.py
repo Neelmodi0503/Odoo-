@@ -18,7 +18,7 @@ class HospitalDoctor(models.Model):
         ("other",'Other')],
         string="Gender",
         default="male",
-    )       
+    ) 
     @api.depends('date_of_birth')
     def compute_age(self):
         today = date.today()
