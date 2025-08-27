@@ -43,14 +43,12 @@ class HospitalPatient(models.Model):
         ('failed', 'Failed'),
     ], default='unpaid',
         readonly=True)
+    external_data = fields.Text(string="Enter External Api")
 
     tag_ids = fields.Many2many(
             "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
         )   
-    _sql_constraints = [
-        ('unique_email', 'unique(email)', 'The email must be unique!'),
-        ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
-    ]
+   
 
                              #Functions 
 
@@ -152,20 +150,28 @@ class HospitalPatient(models.Model):
 
                     #decorators
 
-    @api.constrains("contact_no")
+    @api.constrains("email")
     def check_contact_no_length(self):
         for record in self:
-            if record.contact_no:
-                if len(record.contact_no) != 10:
-                    raise ValidationError("Contact number must be exactly 10 digits")
-                if not record.contact_no.isdigit():
-                    raise ValidationError("Contact number must contain digits only.")
-                if record.email and not record.email.endswith('@gmail.com'):
-                    raise ValidationError("Email must be a Gmail address!")
+            if record.email and not record.email.endswith('@gmail.com'):
+                 raise ValidationError("Email must be a Gmail address!")
+    
+    @api.onchange('contact_no')
+    def check_digit(self):
+        for rec in self:
+            if rec.contact_no and rec.contact_no != 10 :
+                raise ValidationError ("Contact Number Must be 10 Digits ")
+        
 
+    _sql_constraints = [
+        ('unique_email', 'unique(email)', 'The email must be unique!'),
+        ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
+    ]
+
+                
     @api.depends("date_of_birth")
     def compute_age(self):
-        for rec in self:
+        for rec in self:    
             if rec.date_of_birth:
                 today = date.today()
                 rec.age = (
@@ -178,7 +184,10 @@ class HospitalPatient(models.Model):
                 )
             else:
                 rec.age = 0
-    external_data = fields.Text(string="Enter External Api")
+                
+                
+            
+    
 
 
 
