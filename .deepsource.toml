@@ -3,7 +3,7 @@ version = 1
 exclude_patterns = [
   "odoo/**",            # ignore Odoo base source code
   "addons/**",          # ignore all addons
-  "!addons/hospital_management/**"  # but keep checking your module
+  "!docker-addons/hospital_management/**"  # but keep checking your module
 ]
 
 [[analyzers]]
