@@ -4,15 +4,4 @@ version = 1
 name = "python"
 
   [analyzers.meta]
-  runtime_version = "3.x"
-
-[[transformers]]
-name = "black"
-enabled = true
-exclude_patterns = [
-  "venv/**",         # Ignore virtual environment
-  "addons/**",       # Ignore addons folder
-  "static/**", 
-  "lib/**",
-  "venvcd/**"      # (optional) ignore static files
-]
+  runtime_version = "3.x.x"
