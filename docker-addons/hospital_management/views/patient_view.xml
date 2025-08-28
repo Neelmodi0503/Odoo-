@@ -44,6 +44,8 @@
                     <button name="action_save_and_new" string="Save and New" type="object" class="btn-primary"/>
                     <button name="get_senior_patients" string="Get Senior Patients" type="object" class="btn-primary"/>
                     <button name="add_new_patient" string="Add Patients " type="object" class="btn-primary"/>
+                    <button name="%(action_patient_wizard)d" string="Add Note" type="action" class="btn-primary"/>
+
                 </header>
 
                 <sheet>
@@ -51,19 +53,22 @@
                         <group>
                             <field name="name"/>
                             <field name="age"/>
+                            <field name= "image"/>
                             <field name="email" widget="email"/>
                             <field name = "contact_no" widget="phone"/>
+                            
                         </group>
                         
                         <group>
                             <field name="date_of_birth" optional="show"/>
                             <field name="payment_status"/>
                             <field name ="tag_ids" widget="many2many_tags"/>
-                            <field name = "marital_status"/>
+                            <field name = "marital_status" widget="selection"/>
+                            <field name = "tracking_number"/>
                         </group>
                          <group>
                          <field name = "shipping_status"/>
-                         <field name = "tracking_number"/>
+                    
                          <field name = "shipping_price"/>  
                          </group> 
 
@@ -78,6 +83,11 @@
                        />
                        <button name = "action_update_tracking" type = "object"
                             string = " Track " class="btn-primary" />
+
+                    <group string="External API Data">
+                        <field name="external_data"/>
+                        <button string="Fetch External Data" type="object" name="fetch_external_data" class="oe_highlight"/>
+                    </group>
 
 
                 </sheet>
@@ -108,21 +118,6 @@
             </p>
         </field>
     </record>
-
-
-<record id="view_form_hospital_patient" model="ir.ui.view">
-    <field name="name">hospital.patient.form.api</field>
-    <field name="model">hospital.patient</field>
-    <field name="inherit_id" ref="hospital_management.view_hospital_patient_form"/>
-    <field name="arch" type="xml">
-        <xpath expr="//sheet" position="inside">
-            <group string="External API Data">
-                <field name="external_data"/>
-                <button string="Fetch External Data" type="object" name="fetch_external_data" class="oe_highlight"/>
-            </group>
-        </xpath>
-    </field>
-</record>
 
 
                

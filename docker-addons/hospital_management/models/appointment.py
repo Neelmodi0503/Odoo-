@@ -9,7 +9,7 @@ class HospitalAppointment(models.Model):
 
 
     reference = fields.Char(string='Reference', readonly=True, copy=False, default='New')
-    patient_id = fields.Many2one('res.partner', string='Patient', required=False)
+    patient_id = fields.Many2one('hospital.patient', string='Patient', required=False)
     date_of_appointment = fields.Date(string="Date of Appointment", required=True)
     doctor_id = fields.Many2one('hospital.doctor',string='Available Doctors')
     note = fields.Text(string='Notes')
@@ -18,7 +18,7 @@ class HospitalAppointment(models.Model):
         ('confirm', 'Confirmed'),
         ('ongoing','Ongoing'),
         ('done', 'Done'),
-        ('cancel', 'Cancelled') 
+        ('cancel', 'Cancelled')     
     ], string='Status', default='draft', required=True,tracking=True)
     appointment_line_ids = fields.One2many('hospital.appointment.line','appointment_id', string ='Description')
 
@@ -65,7 +65,3 @@ class HospitalAppointmentLine(models.Model):
     appointment_id = fields.Many2one('hospital.appointment',string = 'Appointment Line')
     product_id = fields.Many2one('product.product', string='product')
     qty = fields.Float(string="Quantity")
-
-    
-
-

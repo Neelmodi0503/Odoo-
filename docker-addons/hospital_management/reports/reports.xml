@@ -1,0 +1,30 @@
+<odoo>
+    <template id="report_patient_document">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Patient Report</h2>
+                    <p>
+                        <strong>Name:</strong>
+                        <t t-esc="o.name"/>
+                    </p>
+                    <p>
+                        <strong>Date of Birth:</strong>
+                        <t t-esc="o.date_of_birth"/>
+                    </p>
+                    <p>
+                        <strong>Age:</strong>
+                        <t t-esc="o.age"/>
+                    </p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report id="action_report_patient"
+     model="hospital.patient"
+     string="Patient Report" 
+     report_type="qweb-pdf" 
+     name="hospital.report_patient_document" 
+     file="hospital.report_patient_document" />
+</odoo>

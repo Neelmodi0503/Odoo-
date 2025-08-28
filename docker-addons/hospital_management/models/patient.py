@@ -12,13 +12,14 @@ class HospitalPatient(models.Model):
     _description = "Hospital Patient"
     _rec_name = "name"
 
-     #Fields   
-
+                        #Fields   
     name = fields.Char(string="Patient Name", tracking=True)
     age = fields.Integer(string="Age",compute="compute_age",store=False)
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
+    image = fields.Binary(string="Profile Image")
+
     marital_status = fields.Selection(
         [("single", "Single"),
           ("married", "Married")],
@@ -31,7 +32,7 @@ class HospitalPatient(models.Model):
         string="Gender",
         default="male",
     )
-    # Testing Payment Gateways 
+                # Testing Payment Gateways 
     price = fields.Float(string= "price")
     tracking_number = fields.Char(string="tracking_number")
     status= fields.Char(string="status")
@@ -148,7 +149,7 @@ class HospitalPatient(models.Model):
 
         return patient
 
-                    #decorators
+                          #decorators
 
     @api.constrains("email")
     def check_contact_no_length(self):
@@ -161,6 +162,17 @@ class HospitalPatient(models.Model):
         for rec in self:
             if rec.contact_no and rec.contact_no != 10 :
                 raise ValidationError ("Contact Number Must be 10 Digits ")
+    @api.onchange('name')
+    def check_name(self):
+        for rec in self:
+            if rec.name and  rec.name.isdigit():
+               return {
+                   'warning':{
+                       'title' :'invalid name',
+                       'message' : 'name must be characters'
+                   }
+                   
+               }
         
 
     _sql_constraints = [

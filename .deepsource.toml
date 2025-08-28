@@ -10,3 +10,10 @@ enabled = true
 [[transformers]]
 name = "black"
 enabled = true
+exclude_patterns = [
+  "venv/**",         # Ignore virtual environment
+  "addons/**",       # Ignore addons folder
+  "static/**", 
+  "lib/**",
+  "venvcd/**"      # (optional) ignore static files
+]
