@@ -15,7 +15,7 @@ class HospitalPatient(models.Model):
     
 
     name = fields.Char(string="Patient Name", tracking=True)
-    age = fields.Integer(string="Age",compute="compute_age",store=True)
+    age = fields.Integer(string="Age",compute="compute_age",inverse="_set_age",store=True)
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
@@ -226,6 +226,12 @@ class HospitalPatient(models.Model):
                 )
             else:
                 rec.age = 0
+
+    def _set_age(self):
+        today = date.today()
+        for rec in self:
+            if rec.age:
+                rec.date_of_birth = date(today.year - rec.age, today.month, today.day)
 
 
 
