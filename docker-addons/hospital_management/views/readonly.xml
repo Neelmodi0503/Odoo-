@@ -21,23 +21,31 @@
         <field name="name">hospital.patient.readonly.kanban</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_example">
+          <kanban class="o_kanban_example">
                 <field name="name"/>
-                <field name="age"/>
-                <field name="gender"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click">
+                <field name="image"/>
+
+          <templates>
+                <t t-name="kanban-box">
+                    <div class="o_kanban_card" style="display:flex; align-items:center; gap:10px;">
+                        <!-- Image on the left -->
+                        <div class="o_kanban_image" style="flex-shrink:0;">
+                            <img t-att-src="kanban_image('hospital.patient', 'image', record.id.raw_value)" style="width:80px; height:80px; object-fit:cover; border-radius:50%;"/>
+                        </div>
+
+                        <!-- Fields on the right -->
+                        <div class="o_kanban_details" style="flex-grow:1;">
                             <strong>
                                 <field name="name"/>
                             </strong>
-                            <div>Age: <field name="age"/>
-                            </div>
-                            <div>gender: <field name="gender"/>
-                            </div>
+                            <br/>
+                            <field name="date_of_birth"/>
+                            <br/>
+                            <field name="age"/>
                         </div>
-                    </t>
-                </templates>
+                    </div>
+                </t>
+            </templates>
             </kanban>
         </field>
     </record>
@@ -95,4 +103,3 @@
 
 
 </odoo>
-            

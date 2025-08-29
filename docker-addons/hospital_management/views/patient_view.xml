@@ -32,7 +32,7 @@
     </record>
 
 
-   
+
 
     <record id ="view_hospital_patient_form" model="ir.ui.view">
         <field name="name">hospital.patient.form</field>
@@ -51,14 +51,15 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name"/>
-                            <field name="age"/>
-                            <field name= "image"/>
+                            <field name="name" placeholder="Enter Patient name "/>
+                            <field name="age" placeholder="Enter Patient age "/>
+                            <field name= "image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" alt="Product" class="oe_avatar" />
+
                             <field name="email" widget="email"/>
                             <field name = "contact_no" widget="phone"/>
-                            
+
                         </group>
-                        
+
                         <group>
                             <field name="date_of_birth" optional="show"/>
                             <field name="payment_status"/>
@@ -66,22 +67,20 @@
                             <field name = "marital_status" widget="selection"/>
                             <field name = "tracking_number"/>
                         </group>
-                         <group>
-                         <field name = "shipping_status"/>
-                    
-                         <field name = "shipping_price"/>  
-                         </group> 
+                        <group>
+                            <field name = "shipping_status"/>
+
+
+                            <field name = "shipping_price"/>
+                        </group>
 
                     </group>
-                    
-                     <button name="action_pay_now" type="object"
-                            string="Pay Now" class="btn-primary"
-                            modifiers="{'invisible': [('payment_status','=','paid')]}"/>
+
+                    <button name="action_pay_now" type="object" string="Pay Now" class="btn-primary" modifiers="{'invisible': [('payment_status','=','paid')]}"/>
 
                     <button name = "action_shipping" type = "object"
-                            string = "Fetch Price " class="btn-primary"
-                       />
-                       <button name = "action_update_tracking" type = "object"
+                            string = "Fetch Price " class="btn-primary" />
+                    <button name = "action_update_tracking" type = "object"
                             string = " Track " class="btn-primary" />
 
                     <group string="External API Data">
@@ -91,14 +90,14 @@
 
 
                 </sheet>
-                
+
                 <div class="oe_chatter">
                     <field name="message_follower_ids" groups="base.group_user" widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
 
 
-              
+
 
 
             </form>
@@ -120,7 +119,7 @@
     </record>
 
 
-               
+
 
     <template id="payment_dummy_template" name="Dummy Payment Page">
         <t t-call="web.layout">

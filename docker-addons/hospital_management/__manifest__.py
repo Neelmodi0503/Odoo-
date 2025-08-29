@@ -8,7 +8,7 @@
     "data": [
         "security/ir.model.access.csv",
         "data/sequence.xml",
-        "reports/reports.xml",
+        "report/reports.xml",
         "views/patient_view.xml",
         "views/appointment_view.xml",
         "views/appointment_line_view.xml",

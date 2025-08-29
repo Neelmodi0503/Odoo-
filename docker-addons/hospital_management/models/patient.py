@@ -11,15 +11,15 @@ class HospitalPatient(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Hospital Patient"
     _rec_name = "name"
+    
+    
 
-                        #Fields   
     name = fields.Char(string="Patient Name", tracking=True)
-    age = fields.Integer(string="Age",compute="compute_age",store=False)
+    age = fields.Integer(string="Age",compute="compute_age",store=True)
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
-    image = fields.Binary(string="Profile Image")
-
+    image = fields.Image(string="Profile Image")
     marital_status = fields.Selection(
         [("single", "Single"),
           ("married", "Married")],
@@ -32,7 +32,6 @@ class HospitalPatient(models.Model):
         string="Gender",
         default="male",
     )
-                # Testing Payment Gateways 
     price = fields.Float(string= "price")
     tracking_number = fields.Char(string="tracking_number")
     status= fields.Char(string="status")
@@ -54,6 +53,10 @@ class HospitalPatient(models.Model):
                              #Functions 
 
 
+    """ This Function Will restrict patient record 
+        being deleted if its appoitment exists """
+
+
     def unlink(self):   
             for rec in self:
                 appointments = self.env["hospital.appointment"].search(
@@ -64,7 +67,10 @@ class HospitalPatient(models.Model):
                         _("Cannot delete patient with existing appointments.")
                     )
             return super(HospitalPatient, self).unlink()
+    
 
+    """ This Function will save the record
+         with button and than clear form fields  """
     
     def action_save_and_new(self):
         return {
@@ -80,6 +86,10 @@ class HospitalPatient(models.Model):
                 default_gender=False,
             ),
         }
+    
+    """ This Function Will fetch The shipping Price and tha update it in the ui"""
+
+
     def action_shipping(self):
         response = {
             "price": 150.0,
@@ -103,6 +113,9 @@ class HospitalPatient(models.Model):
             "shipping_status": response["status"]
         })
         return True
+    
+    """ This Will redirect user to dummy page and than update the payment status """
+
     def action_pay_now(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         return {
@@ -110,6 +123,8 @@ class HospitalPatient(models.Model):
             "target": "self",
             "url": f"{base_url}/hospital/payment?patient_id={self.id}"
     }
+
+    """ This will fetch external  url and show data accordingly """
 
 
     def fetch_external_data(self):
@@ -124,6 +139,8 @@ class HospitalPatient(models.Model):
         except Exception as e:
             _logger.error("Error fetching API data: %s", str(e))
 
+    """ This will show senior patient list """
+
 
     def get_senior_patients(self):
         senior = self.env['hospital.patient'].search([('age', '>', '25')])
@@ -134,8 +151,12 @@ class HospitalPatient(models.Model):
             'res_model': 'hospital.patient',
             'view_mode': 'tree,form',
             'domain': [('id', 'in', senior.ids)],  
-            'target': 'current',
+            'target': 'current'
         }
+    
+    """This will used to add new patient """
+
+
     def add_new_patient(self):
         patient = self.env['hospital.patient'].create({
             'name': 'Hemil Dave',
@@ -151,17 +172,25 @@ class HospitalPatient(models.Model):
 
                           #decorators
 
+    """ This is used for validating email """
+
+
     @api.constrains("email")
     def check_contact_no_length(self):
         for record in self:
             if record.email and not record.email.endswith('@gmail.com'):
                  raise ValidationError("Email must be a Gmail address!")
+        
+    """ used to  check length of contact number """
     
     @api.onchange('contact_no')
     def check_digit(self):
         for rec in self:
             if rec.contact_no and rec.contact_no != 10 :
                 raise ValidationError ("Contact Number Must be 10 Digits ")
+            
+    """ Raise a warning if name is only digit """
+    
     @api.onchange('name')
     def check_name(self):
         for rec in self:
@@ -173,13 +202,14 @@ class HospitalPatient(models.Model):
                    }
                    
                }
+    """ Data base level Validation """
         
 
     _sql_constraints = [
         ('unique_email', 'unique(email)', 'The email must be unique!'),
         ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
     ]
-
+    """ Used to compute age based on  dob"""
                 
     @api.depends("date_of_birth")
     def compute_age(self):
@@ -196,6 +226,9 @@ class HospitalPatient(models.Model):
                 )
             else:
                 rec.age = 0
+
+
+
                 
                 
             

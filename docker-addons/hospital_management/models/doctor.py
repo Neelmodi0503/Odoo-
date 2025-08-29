@@ -1,6 +1,8 @@
 from odoo import models , fields,api,_
 from  datetime import date
 import logging
+import pdb
+import datetime
 _logger = logging.getLogger(__name__)
 
 class HospitalDoctor(models.Model):
@@ -38,8 +40,10 @@ class HospitalDoctor(models.Model):
         for doc in doctors:
             _logger.info("Doctor Found: %s (Age: %s)", doc.name, doc.age)
 
-    
- 
+
+
+
+
 
 
 
