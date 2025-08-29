@@ -1,0 +1,68 @@
+<?xml  version ="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id = 'view_hospital_doctor_tree' model= 'ir.ui.view'>
+        <field name = 'name'> hospital.doctor.tree</field>
+        <field name = 'model'>hospital.doctor</field>
+        <field name = 'arch' type='xml'>
+            <tree string = 'doctors'>
+                <field name= 'name' readonly="1" />
+                <field name = 'age' readonly="1" />
+                <field name = 'specialist' readonly = "1" />
+            </tree>
+        </field>
+
+    </record>
+
+    <record id = "view_hospital_doctor_form" model = "ir.ui.view">
+        <field name = "name">hospital.doctor.form</field>
+        <field name = 'model'>hospital.doctor</field>
+        <field name = 'arch' type = 'xml'>
+            <form string="Doctor Form" class="o_form_view">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name = 'name'  />
+                            <field name = 'age' />
+                        </group>
+                        <group>
+                            <field name = "specialist"/>
+                            <field name = "date_of_birth"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+
+
+    </record>
+
+    <record id = "action_hospital_doctor" model = 'ir.actions.act_window'>
+        <field name = 'name'>doctor</field>
+        <field name = 'res_model'>hospital.doctor</field>
+        <field name = 'view_mode'>tree,form</field>
+        <field name = 'help' type='html'>
+            <p class="o_view_nocontent_smiling_face">   
+                Create your first doctor
+            </p>
+        </field>
+    </record>
+
+    <record id="ir_cron_doctor_test" model="ir.cron">
+        <field name="name">Test Doctor Cron</field>
+        <field name="model_id" ref="model_hospital_doctor"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_test_doctor()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+
+
+
+
+
+</odoo>

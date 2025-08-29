@@ -1,0 +1,12 @@
+    <odoo>
+        <record id="view_crm_lead_form_inherit_confirm" model="ir.ui.view">
+            <field name="name">crm.lead.form.confirm.wizard</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="%(action_crm_lead_confirm_wizard)d" string="Convert to Opportunity" type="action" class="btn-primary" />
+                </header>
+            </field>
+        </record>
+    </odoo>
