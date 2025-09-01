@@ -28,12 +28,10 @@
           <templates>
                 <t t-name="kanban-box">
                     <div class="o_kanban_card" style="display:flex; align-items:center; gap:10px;">
-                        <!-- Image on the left -->
                         <div class="o_kanban_image" style="flex-shrink:0;">
-                            <img t-att-src="kanban_image('hospital.patient', 'image', record.id.raw_value)" style="width:80px; height:80px; object-fit:cover; border-radius:50%;"/>
+                            <img t-att-src="kanban_image('hospital.patient', 'image', record.id.raw_value)" style="width:80px; height:80px; object-fit:cover;"/>
                         </div>
 
-                        <!-- Fields on the right -->
                         <div class="o_kanban_details" style="flex-grow:1;">
                             <strong>
                                 <field name="name"/>

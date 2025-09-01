@@ -1,8 +1,9 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import date
-import requests
 import logging
+import requests
+
 
 _logger = logging.getLogger(__name__)
 
@@ -11,7 +12,6 @@ class HospitalPatient(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Hospital Patient"
     _rec_name = "name"
-    
     
 
     name = fields.Char(string="Patient Name", tracking=True)

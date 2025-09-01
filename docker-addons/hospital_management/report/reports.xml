@@ -4,7 +4,7 @@
             <main>
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                        <h2 class="report-title">Patient Report</h2>
+                        <h2 class="report-title" style="text-align : center" >Patient Report</h2>
                         <p>
                             <strong>Name :- </strong>
                             <t t-esc="o.name"/>
@@ -58,7 +58,6 @@
         </t>
     </template>
 
-    <!-- Report Action -->
     <record id="action_patient_report" model="ir.actions.report">
         <field name="name">Patient Report</field>
         <field name="model">hospital.patient</field>
@@ -69,10 +68,7 @@
     </record>
 
 
-
-
-
-    <!-- Sale Quotaion Change-->
+    <!-- using xpath to customize report -->
 
     <template id = "sale_order_pdf" inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@class='row']" position="before">
@@ -81,5 +77,22 @@
             </div>
         </xpath>
     </template>
+
+
+    <template id="product_xpath" inherit_id="product.report_pricelist" >
+    <xpath expr="//div[@class='page']" position="after">
+    <p style="text-align : center">Date: <t t-esc="time.strftime('%d-%m-%Y')"/>
+    </p>
+</xpath>    
+
+    </template>
+
+
+    <template id="rfq_xpath" inherit_id="purchase.report_purchasequotation_document">
+    <xpath expr="//p[@t-field='o.notes']" position="after">
+    <p style="text-align : center"> email@gmail.com </p>
+    </xpath>
+    </template>
+
 
 </odoo>

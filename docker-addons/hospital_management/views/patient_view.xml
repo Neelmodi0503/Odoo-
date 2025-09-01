@@ -49,8 +49,8 @@
                 </header>
 
                 <sheet>
-                    <group>
-                        <group>
+                    <group string="Patient Information">
+                        <group string="Basic Info">
                             <field name="name" placeholder="Enter Patient name "/>
                             <field name="age" placeholder="Enter Patient age "/>
                             <field name= "image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" alt="Product" class="oe_avatar" />
