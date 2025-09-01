@@ -22,7 +22,7 @@ class HospitalPatient(models.Model):
     image = fields.Image(string="Profile Image")
     marital_status = fields.Selection(
         [("single", "Single"),
-          ("married", "Married")],
+          ("married", "Married")],  
             default="single"
     )
     gender = fields.Selection(
@@ -49,9 +49,6 @@ class HospitalPatient(models.Model):
             "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
         )   
    
-
-                             #Functions 
-
 
     """ This Function Will restrict patient record 
         being deleted if its appoitment exists """

@@ -68,10 +68,6 @@
         <field name="binding_type">report</field>
     </record>
 
-
-
-
-
     <!-- Sale Quotaion Change-->
 
     <template id = "sale_order_pdf" inherit_id="sale.report_saleorder_document">
