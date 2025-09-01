@@ -1,0 +1,136 @@
+[33mcommit fadf0d8b28fe0bae7012bc4cfca4f18d5a19cd3a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Neel Modi <neelmodi991@gmail.com>
+Date:   Mon Sep 1 15:39:32 2025 +0530
+
+    changes
+
+[1mdiff --git a/hospital_management/models/patient.py b/hospital_management/models/patient.py[m
+[1mindex 7cd70aa..48f23d1 100755[m
+[1m--- a/hospital_management/models/patient.py[m
+[1m+++ b/hospital_management/models/patient.py[m
+[36m@@ -22,7 +22,7 @@[m [mclass HospitalPatient(models.Model):[m
+     image = fields.Image(string="Profile Image")[m
+     marital_status = fields.Selection([m
+         [("single", "Single"),[m
+[31m-          ("married", "Married")],[m
+[32m+[m[32m          ("married", "Married")],[m[41m  [m
+             default="single"[m
+     )[m
+     gender = fields.Selection([m
+[36m@@ -50,9 +50,6 @@[m [mclass HospitalPatient(models.Model):[m
+         )   [m
+    [m
+ [m
+[31m-                             #Functions [m
+[31m-[m
+[31m-[m
+     """ This Function Will restrict patient record [m
+         being deleted if its appoitment exists """[m
+ [m
+[1mdiff --git a/hospital_management/report/reports.xml b/hospital_management/report/reports.xml[m
+[1mindex acfe701..d97821b 100644[m
+[1m--- a/hospital_management/report/reports.xml[m
+[1m+++ b/hospital_management/report/reports.xml[m
+[36m@@ -68,10 +68,6 @@[m
+         <field name="binding_type">report</field>[m
+     </record>[m
+ [m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+     <!-- Sale Quotaion Change-->[m
+ [m
+     <template id = "sale_order_pdf" inherit_id="sale.report_saleorder_document">[m
+[1mdiff --git a/hospital_management/views/doctor_view.xml b/hospital_management/views/doctor_view.xml[m
+[1mindex 7fd31ac..5900475 100644[m
+[1m--- a/hospital_management/views/doctor_view.xml[m
+[1m+++ b/hospital_management/views/doctor_view.xml[m
+[36m@@ -59,10 +59,4 @@[m
+         <field name="numbercall">-1</field>[m
+         <field name="active">True</field>[m
+     </record>[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+ </odoo>[m
+\ No newline at end of file[m
+[1mdiff --git a/hospital_management/views/patient_view.xml b/hospital_management/views/patient_view.xml[m
+[1mindex e0d0f95..68607ee 100644[m
+[1m--- a/hospital_management/views/patient_view.xml[m
+[1m+++ b/hospital_management/views/patient_view.xml[m
+[36m@@ -41,7 +41,7 @@[m
+             <form string="Patient Form" class="o_form_view">[m
+ [m
+                 <header>[m
+[31m-                    <button name="action_save_and_new" string="Save and New" type="object" class="btn-primary"/>[m
+[32m+[m[32m                    <button name="action_save_and_new" string="Save and New" type="object"/>[m
+                     <button name="get_senior_patients" string="Get Senior Patients" type="object" class="btn-primary"/>[m
+                     <button name="add_new_patient" string="Add Patients " type="object" class="btn-primary"/>[m
+                     <button name="%(action_patient_wizard)d" string="Add Note" type="action" class="btn-primary"/>[m
+[36m@@ -50,27 +50,25 @@[m
+ [m
+                 <sheet>[m
+                     <group>[m
+[31m-                        <group>[m
+[32m+[m[32m                        <group string="Patient Info">[m
+                             <field name="name" placeholder="Enter Patient name "/>[m
+                             <field name="age" placeholder="Enter Patient age "/>[m
+[31m-                            <field name= "image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" alt="Product" class="oe_avatar" />[m
+[32m+[m[32m                            <field name = "marital_status" widget="selection"/>[m
+[32m+[m[32m                            <field name= "image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" alt="Patient Image" class="oe_avatar" />[m
+[32m+[m[32m                            <field name="date_of_birth" optional="show"/>[m
+ [m
+                             <field name="email" widget="email"/>[m
+                             <field name = "contact_no" widget="phone"/>[m
+ [m
+                         </group>[m
+ [m
+[31m-                        <group>[m
+[31m-                            <field name="date_of_birth" optional="show"/>[m
+[32m+[m[32m                        <group string="Payment status">[m
+                             <field name="payment_status"/>[m
+                             <field name ="tag_ids" widget="many2many_tags"/>[m
+[31m-                            <field name = "marital_status" widget="selection"/>[m
+                             <field name = "tracking_number"/>[m
+                         </group>[m
+                         <group>[m
+                             <field name = "shipping_status"/>[m
+[31m-[m
+[31m-[m
+                             <field name = "shipping_price"/>[m
+                         </group>[m
+ [m
+[36m@@ -95,11 +93,6 @@[m
+                     <field name="message_follower_ids" groups="base.group_user" widget="mail_followers"/>[m
+                     <field name="message_ids" widget="mail_thread"/>[m
+                 </div>[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+             </form>[m
+         </field>[m
+     </record>[m
+[1mdiff --git a/hospital_management/views/readonly.xml b/hospital_management/views/readonly.xml[m
+[1mindex f55314c..f887c9e 100644[m
+[1m--- a/hospital_management/views/readonly.xml[m
+[1m+++ b/hospital_management/views/readonly.xml[m
+[36m@@ -28,12 +28,10 @@[m
+           <templates>[m
+                 <t t-name="kanban-box">[m
+                     <div class="o_kanban_card" style="display:flex; align-items:center; gap:10px;">[m
+[31m-                        <!-- Image on the left -->[m
+                         <div class="o_kanban_image" style="flex-shrink:0;">[m
+[31m-                            <img t-att-src="kanban_image('hospital.patient', 'image', record.id.raw_value)" style="width:80px; height:80px; object-fit:cover; border-radius:50%;"/>[m
+[32m+[m[32m                            <img t-att-src="kanban_image('hospital.patient', 'image', record.id.raw_value)" style="width:80px; height:80px; object-fit:cover; border-radius:50%;" alt="patient image"/>[m
+                         </div>[m
+ [m
+[31m-                        <!-- Fields on the right -->[m
+                         <div class="o_kanban_details" style="flex-grow:1;">[m
+                             <strong>[m
+                                 <field name="name"/>[m
