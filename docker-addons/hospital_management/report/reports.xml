@@ -58,7 +58,8 @@
         </t>
     </template>
 
-    <!-- Report Action -->
+            <!--  Patien Report Action  -->
+
     <record id="action_patient_report" model="ir.actions.report">
         <field name="name">Patient Report</field>
         <field name="model">hospital.patient</field>
@@ -69,10 +70,8 @@
     </record>
 
 
+               <!-- Xpath Data     -->
 
-
-
-    <!-- Sale Quotaion Change-->
 
     <template id = "sale_order_pdf" inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@class='row']" position="before">
@@ -81,5 +80,23 @@
             </div>
         </xpath>
     </template>
+
+
+                <!--  Dummy Payment Page -->
+
+    <template id="payment_dummy_template" name="Dummy Payment Page">
+        <t t-call="web.layout">
+            <div class="oe_structure container mt-5">
+                <h2>Dummy Payment Page</h2>
+                <p>Hello <t t-esc="patient.name"/>
+ 👋</p>
+                <p>Status: <strong>
+                    <t t-esc="patient.payment_status"/>
+                </strong>
+            </p>
+            <p>✅ Refreshing this page marks your payment as done automatically.</p>
+        </div>
+    </t>
+</template>
 
 </odoo>

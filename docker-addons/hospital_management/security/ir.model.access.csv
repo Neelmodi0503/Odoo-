@@ -6,4 +6,4 @@ access_hospital_appointment_line,access_hospital_appointment_line,model_hospital
 access_crm_lead_confirm_wizard,access.crm.lead.confirm.wizard,model_crm_lead_confirm_wizard,base.group_user,1,1,1,1
 access_hospital_doctor,access_hospital_doctor,model_hospital_doctor,base.group_user,1,1,1,1
 access_hospital_wizard,access_hospital_wizard,model_hospital_wizard,base.group_user,1,1,1,1
-
+access_hospital_blood_group,access_hospital_blood_group,model_hospital_blood_group,base.group_user,1,1,1,1

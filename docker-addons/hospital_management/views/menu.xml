@@ -50,5 +50,12 @@
             parent = "menu_configuration"
             action ="action_patient_tag" />
 
+      <menuitem 
+            id = "menu_blood_group"
+            name = "Blood_group"
+            parent="menu_configuration"
+            action = "action_blood_group_type" />
+      
+
 </odoo>
         

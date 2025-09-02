@@ -16,6 +16,7 @@ class HospitalPatient(models.Model):
 
     name = fields.Char(string="Patient Name", tracking=True)
     age = fields.Integer(string="Age",compute="compute_age",inverse="_set_age",store=True)
+    blood_group = fields.Many2one("hospital.blood.group" , string="Blood Group ")
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")

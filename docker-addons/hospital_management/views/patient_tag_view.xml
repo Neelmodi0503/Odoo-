@@ -24,5 +24,31 @@
         </field>
     </record>  
 
+
+
+    <record id ="blood_group_tree"  model="ir.ui.view" >
+    <field name ="name">hospital.blood.group.tree</field>
+    <field name="model">hospital.blood.group</field>
+    <field name="arch" type="xml">
+    <tree string = "Blood Group Data" editable="top" >
+    <field name="name" />
+    </tree>
+    </field>
+    </record>
+
+
+    <record id = "action_blood_group_type" model="ir.actions.act_window">
+    <field name ="name"> Blood Group </field>
+    <field name = "res_model">hospital.blood.group</field>
+    <field name = "view_mode">tree</field>
+    <field name= "help" type="html">
+    <p class="o_view_nocontent_smiling_face">
+        Enter Blood Type
+    </p>
+    </field>
+    </record>
+
+
+
 </odoo>
             

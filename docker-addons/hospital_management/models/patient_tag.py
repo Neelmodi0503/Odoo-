@@ -7,4 +7,16 @@ class PatientTag(models.Model):
 
     name = fields.Char(string='Tag Name', required=True)
 
+class HospitalBloodgroup(models.Model):
+    _name = "hospital.blood.group"
+    _description = "Hosital Blood Group Data"
+
+
+
+    name  = fields.Char("Blood Group ")
+
+
+
+
+
 

@@ -1,6 +1,8 @@
 <?xml  version ="1.0" encoding="UTF-8"?>
 <odoo>
 
+                      <!--   Tree View    -->
+
     <record id ="view_hospital_patient_tree" model="ir.ui.view">
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
@@ -15,6 +17,8 @@
             </tree>
         </field>
     </record>
+
+                    <!-- Search View  -->
 
     <record id = "patient_serach_view" model="ir.ui.view">
         <field name="name">hospital.patient.search</field>
@@ -32,7 +36,7 @@
     </record>
 
 
-
+                    <!-- Form View    -->
 
     <record id ="view_hospital_patient_form" model="ir.ui.view">
         <field name="name">hospital.patient.form</field>
@@ -49,43 +53,48 @@
                 </header>
 
                 <sheet>
-                    <group>
+                    <group string="Baisic Info" col="2">
                         <group>
-                            <field name="name" placeholder="Enter Patient name "/>
-                            <field name="age" placeholder="Enter Patient age "/>
-                            <field name= "image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" alt="Product" class="oe_avatar" />
-
-                            <field name="email" widget="email"/>
-                            <field name = "contact_no" widget="phone"/>
-
-                        </group>
-
-                        <group>
-                            <field name="date_of_birth" optional="show"/>
-                            <field name="payment_status"/>
-                            <field name ="tag_ids" widget="many2many_tags"/>
-                            <field name = "marital_status" widget="selection"/>
-                            <field name = "tracking_number"/>
+                            <field name="name"/>
+                            <field name="blood_group"/>
+                            <field name="date_of_birth"/>
+                            <field name="age"/>
+                            <field name="marital_status"/>
                         </group>
                         <group>
-                            <field name = "shipping_status"/>
-
-
-                            <field name = "shipping_price"/>
+                            <field name="image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" class="oe_avatar"/>
                         </group>
-
                     </group>
 
-                    <button name="action_pay_now" type="object" string="Pay Now" class="btn-primary" modifiers="{'invisible': [('payment_status','=','paid')]}"/>
+                    <group string="Contact-info" col="2">
+                        <group>
+                            <field name="email" widget="email" placeholder="Please Enter Email-id"/>
+                            <field name="contact_no" widget="phone" placeholder="It should contain 10 digits"/>
+                            <field name="tag_ids" widget="many2many_tags" placeholder="Description"/>
+                        </group>
+                        <group>
+                            <field name="payment_status" readonly="1"/>
+                            <field name="shipping_status"/>
+                            <field name="shipping_price"/>
+                        </group>
+                    </group>
 
-                    <button name = "action_shipping" type = "object"
+
+                    <div class="d-flex justify-content-between">
+                        <button name="action_pay_now" type="object" string="Pay" class="btn-primary" modifiers="{'invisible': [('payment_status','=','paid')]}"/>
+
+
+                        <button name = "action_shipping" type = "object"
                             string = "Fetch Price " class="btn-primary" />
-                    <button name = "action_update_tracking" type = "object"
+                        <button name = "action_update_tracking" type = "object"
                             string = " Track " class="btn-primary" />
+
+
+                    </div>
 
                     <group string="External API Data">
                         <field name="external_data"/>
-                        <button string="Fetch External Data" type="object" name="fetch_external_data" class="oe_highlight"/>
+                        <button string="Fetch External Data" type="object" name="fetch_external_data" class="oe_highlight mt-3 "/>
                     </group>
 
 
@@ -106,6 +115,9 @@
 
 
 
+            <!--  Action TO open In Tree And form -->
+
+
     <record id ="action_hospital_patient" model="ir.actions.act_window">
         <field name ="name">Patients</field>
         <field name ="res_model">hospital.patient</field>
@@ -121,22 +133,6 @@
 
 
 
-    <template id="payment_dummy_template" name="Dummy Payment Page">
-        <t t-call="web.layout">
-            <div class="oe_structure container mt-5">
-                <h2>Dummy Payment Page</h2>
-                <p>Hello <t t-esc="patient.name"/>
- 👋</p>
-                <p>Status: <strong>
-                    <t t-esc="patient.payment_status"/>
-                </strong>
-            </p>
-            <p>✅ Refreshing this page marks your payment as done automatically.</p>
-        </div>
-    </t>
-</template>
-
-
-
+    
 </odoo>
             
