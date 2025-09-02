@@ -2,11 +2,14 @@
 venv/
 .env/
 
+reporting-engine/
+
 # Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
 
 # Logs
 *.log
