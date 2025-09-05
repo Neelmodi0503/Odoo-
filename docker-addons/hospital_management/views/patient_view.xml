@@ -38,46 +38,53 @@
 
                     <!-- Form View    -->
 
-    <record id ="view_hospital_patient_form" model="ir.ui.view">
-        <field name="name">hospital.patient.form</field>
-        <field name="model">hospital.patient</field>
-        <field name="arch" type="xml">
-            <form string="Patient Form" class="o_form_view">
+        <record id ="view_hospital_patient_form" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patient Form" class="o_form_view">
 
-                <header>
-                    <button name="action_save_and_new" string="Save and New" type="object" class="btn-primary"/>
-                    <button name="get_senior_patients" string="Get Senior Patients" type="object" class="btn-primary"/>
-                    <button name="add_new_patient" string="Add Patients " type="object" class="btn-primary"/>
-                    <button name="%(action_patient_wizard)d" string="Add Note" type="action" class="btn-primary"/>
+                    <header>
+                        <button name="action_save_and_new" string="Save and New" type="object" class="btn-primary"/>
+                        <button name="get_senior_patients" string="Get Senior Patients" type="object" class="btn-primary"/>
+                        <button name="add_new_patient" string="Add Patients " type="object" class="btn-primary"/>
+                        <button name="%(action_patient_wizard)d" string="Add Note" type="action" class="btn-primary"/>
+                    </header>
 
-                </header>
+                    <sheet>
+                        <group string="Baisic Info" col="2">    
+                            <group>
+                                <field name="name" placeholder="Enter Name"/>
+                                <field name="blood_group" placeholder="Select Blood Group"/>
+                                <field name="date_of_birth"/>
+                                <field name="age"/>
+                            </group>
+                            <group>
+                                <field name="image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" class="oe_avatar"/>
+                                <field name="marital_status"/>
 
-                <sheet>
-                    <group string="Baisic Info" col="2">
-                        <group>
-                            <field name="name"/>
-                            <field name="blood_group"/>
-                            <field name="date_of_birth"/>
-                            <field name="age"/>
-                            <field name="marital_status"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="image" widget="image" options="{'img_class': 'o_image_64_contain mw-100'}" class="oe_avatar"/>
-                        </group>
-                    </group>
 
-                    <group string="Contact-info" col="2">
-                        <group>
-                            <field name="email" widget="email" placeholder="Please Enter Email-id"/>
-                            <field name="contact_no" widget="phone" placeholder="It should contain 10 digits"/>
-                            <field name="tag_ids" widget="many2many_tags" placeholder="Description"/>
+                        <group string="Contact-info" col="2">
+                            <group>
+                                <field name="email" widget="email" placeholder="Please Enter Email-id"/>
+                                <field name="contact_no" widget="phone" placeholder="It should contain 10 digits"/>
+                                <field name="tag_ids" widget="many2many_tags" placeholder="Description" options="{'no_create': True}"/>
+
+                            </group>
+                            <group>
+                            <field name = "address" placeholder="Resident Address" />
+                            <field name = "zip_code" placeholder="enter pin code" />
+                            <field name = 'country' placeholder="Enter country name" />
+                            </group>
                         </group>
+
                         <group>
                             <field name="payment_status" readonly="1"/>
                             <field name="shipping_status"/>
                             <field name="shipping_price"/>
                         </group>
-                    </group>
 
 
                     <div class="d-flex justify-content-between">
@@ -133,6 +140,7 @@
 
 
 
-    
+
+
 </odoo>
             

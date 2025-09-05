@@ -2,7 +2,7 @@
     "name": "Hospital Management",
     "version": "1.0",
     "author": "Neel Modi",
-    "depends": ["base", "mail", "product","sale",'crm','website','report_xlsx'],
+    "depends": ["base", "mail", "product","sale",'crm','website','report_xlsx','stock'],
     "license":'LGPL-3',
     'sequence':"1",
     "data": [

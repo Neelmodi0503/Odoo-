@@ -26,10 +26,10 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="reference"/>
-                        <field name="patient_id"/>
-                        <field name="doctor_id" />
-                        <field name="date_of_appointment"/>
+                        <field name="reference" />
+                        <field name="patient_id" options="{'no_create': True}" />
+                        <field name="doctor_id" options="{'no_create': True}" />
+                        <field name="date_of_appointment" />
                     </group>
                     <group>
                         <field name="note"/>

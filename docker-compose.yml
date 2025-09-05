@@ -20,7 +20,7 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     environment:
-      - DB_HOST=db
+      - DB_HOST=odoo17-db
       - DB_USER=odoo
       - DB_PASSWORD=odoo
       - ADDONS_PATH=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons

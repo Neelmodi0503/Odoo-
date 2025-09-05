@@ -55,7 +55,18 @@
             name = "Blood_group"
             parent="menu_configuration"
             action = "action_blood_group_type" />
-      
 
+      <menuitem
+                id="menu_inventory_xlsx_report"
+                name="Xlsx Report"
+                parent="stock.menu_stock_root"
+                
+       />
+       <menuitem
+               id = "menu_inventory_xlsx"
+               name = "Reports"
+               parent= "menu_inventory_xlsx_report"
+               action="action_report_indate"
+            />
 </odoo>
         

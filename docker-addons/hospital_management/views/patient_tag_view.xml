@@ -11,8 +11,6 @@
         </field>
     </record>
 
-
-
     <record id ="action_patient_tag" model="ir.actions.act_window">
         <field name ="name">Patients Tags</field>
         <field name ="res_model">patient.tag</field>

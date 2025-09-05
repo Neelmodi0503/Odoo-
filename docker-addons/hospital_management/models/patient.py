@@ -12,7 +12,7 @@ class HospitalPatient(models.Model):
     _description = "Hospital Patient"
     _rec_name = "name"
     
-    
+            #Fields
 
     name = fields.Char(string="Patient Name", tracking=True)
     age = fields.Integer(string="Age",compute="compute_age",inverse="_set_age",store=True)
@@ -20,7 +20,23 @@ class HospitalPatient(models.Model):
     date_of_birth = fields.Date(string="Date of Birth", tracking=True)
     email = fields.Char(string="Email",required =True)
     contact_no = fields.Char(string="Contact NO :- ")
+    address = fields.Text('Address')
+    zip_code=fields.Text('Postal Code ')
     image = fields.Image(string="Profile Image")
+    price = fields.Float(string= "price")
+    tracking_number = fields.Char(string="tracking_number")
+    status= fields.Char(string="status")
+    shipping_price = fields.Float(string="Shipping Price")
+    shipping_status = fields.Char(string="Shipping Status")
+    external_data = fields.Text(string="Enter External Api")
+
+    country = fields.Selection([
+        ('india' , 'India'),
+        ('russia' , 'Russia'),
+        ('america', 'America'),
+        ('china','China')
+        ])
+    
     marital_status = fields.Selection(
         [("single", "Single"),
           ("married", "Married")],
@@ -33,18 +49,12 @@ class HospitalPatient(models.Model):
         string="Gender",
         default="male",
     )
-    price = fields.Float(string= "price")
-    tracking_number = fields.Char(string="tracking_number")
-    status= fields.Char(string="status")
-    shipping_price = fields.Float(string="Shipping Price")
-    shipping_status = fields.Char(string="Shipping Status")
     payment_status = fields.Selection([
         ('unpaid', 'Unpaid'),
         ('paid', 'Paid'),
         ('failed', 'Failed'),
     ], default='unpaid',
         readonly=True)
-    external_data = fields.Text(string="Enter External Api")
 
     tag_ids = fields.Many2many(
             "patient.tag", "patient_tag_rel", "patient_id", "tag_id", string="Tags"
@@ -143,6 +153,12 @@ class HospitalPatient(models.Model):
     """ This will show senior patient list """
 
 
+
+        
+
+   
+
+
     def get_senior_patients(self):
         senior = self.env['hospital.patient'].search([('age', '>', '25')])
 
@@ -182,14 +198,22 @@ class HospitalPatient(models.Model):
             if record.email and not record.email.endswith('@gmail.com'):
                  raise ValidationError("Email must be a Gmail address!")
         
+   
+
+
+        
     """ used to  check length of contact number """
     
-    @api.onchange('contact_no')
+    @api.onchange('contact_no',"zip_code")
     def check_digit(self):
         for rec in self:
-            if rec.contact_no and rec.contact_no != 10 :
+            if rec.contact_no and len(rec.contact_no) != 10 :
                 raise ValidationError ("Contact Number Must be 10 Digits ")
             
+    def check_zip_code(self):
+        for rec in self:
+            if rec.zip_code and len(rec.zip_code) != 6:
+                raise ValidationError("Zip code must be 6 digits ")
     """ Raise a warning if name is only digit """
     
     @api.onchange('name')
@@ -210,7 +234,7 @@ class HospitalPatient(models.Model):
         ('unique_email', 'unique(email)', 'The email must be unique!'),
         ('name_not_null', 'CHECK(name IS NOT NULL)', 'Patient name cannot be empty!'),
     ]
-    """ Used to compute age based on  dob"""
+    """ Used to compute age based on dob"""
                 
     @api.depends("date_of_birth")
     def compute_age(self):
